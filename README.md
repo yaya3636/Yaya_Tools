@@ -54,4 +54,5 @@
   * Print un message dans la console Ankabot en fonction des paramètre
   * Params 1 : Message a print
   * Params 2 (facultatif) : Place un header avant le message ([header] message)
-  * params 3 (facultatif) : "warn" ou "error" Colorie le message et place un header d'avertissement, le params 2 et obligatoire
+  * params 3 (facultatif) : "warn" ou "error" Colorie le message et place un header d'avertissement, le params 2 et obligatoire ([Avertissement][header] message)
+

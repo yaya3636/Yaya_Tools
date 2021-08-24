@@ -46,7 +46,7 @@
   * Prend en paramètre l'ID de la sous zone
 
 ## Utils
-1. Pour utiliser les fonction Zone mettez cette ligne en haut de votre script lua :
+1. Pour utiliser les fonction Utils mettez cette ligne en haut de votre script lua :
 
    Utils = dofile(global:getCurrentDirectory() .. "\\\YAYA\\\Module\\\Utils.lua")
    

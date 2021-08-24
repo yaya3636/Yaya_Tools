@@ -65,4 +65,13 @@ function Movement:RoadZone(tblMapId)
     end
 end
 
+function Movement:InMapChecker(tbl)
+    for _, v in pairs(tbl) do
+        if map:currentMapId() == v then
+            return true
+        end
+    end
+    return false
+end
+
 return Movement

@@ -60,6 +60,11 @@
   * Parcours tout les éléments d'une table et ses sous tables en affichant leurs valeurs
   * Params 1 : La table
 
+* Utils:Equal(str1, str2)
+  * Retourne true si les valeur sont égale, false si elle ne sont pas égale
+  * Params 1 : Valeur a comparé (int, string)
+  * Params 2 : Valeur a comparé (int, string)
+
 * Utils:GetTableValue(index, tbl)
   * Retourne la valeur d'un élément d'une table a l'index indiqué
   * Params 1 : L'index souhaité

@@ -48,7 +48,7 @@
 ### Utils
 1. Pour utiliser les fonction Zone mettez cette ligne en haut de votre script lua :
 
-   Zone = dofile(global:getCurrentDirectory() .. "\\\YAYA\\\Module\\\Utils.lua")
+   Utils = dofile(global:getCurrentDirectory() .. "\\\YAYA\\\Module\\\Utils.lua")
    
 * Utils:Print(msg, header, msgType) 
   * Print un message dans la console Ankabot en fonction des paramètre

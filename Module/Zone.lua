@@ -9,52 +9,74 @@ Zone.AreaPath = global:getCurrentDirectory() .. "\\YAYA\\Area\\"
 function Zone:GetAreaMapId(areaId)
     local areaInfo = JSON.decode(Utils:ReadFile(self.AreaPath .. areaId .. ".json"))
 
-    local mapId = {}
+    if areaInfo then
+        local mapId = {}
 
-    for _, v in pairs(areaInfo.subArea) do
-        local tmpMapId = self:GetSubAreaMapId(v)
+        for _, v in pairs(areaInfo.subArea) do
+            local tmpMapId = self:GetSubAreaMapId(v)
 
-        for _, j in pairs(tmpMapId) do
-            table.insert(mapId, j)
+            for _, j in pairs(tmpMapId) do
+                table.insert(mapId, j)
+            end
         end
-    end
 
-    return mapId
+        return mapId
+    end
+    return nil
 end
 
 function Zone:GetAreaName(areaId)
     local areaInfo = JSON.decode(Utils:ReadFile(self.AreaPath .. areaId .. ".json"))
 
-    return areaInfo.areaName
+    if areaInfo then
+        return areaInfo.areaName
+    end
+    return nil
 end
 
 function Zone:GetSubArea(areaId)
     local areaInfo = JSON.decode(Utils:ReadFile(self.AreaPath .. areaId .. ".json"))
 
-    return areaInfo.subArea
+    if areaInfo then
+        return areaInfo.subArea
+    end
+    return nil
 end
 
 function Zone:GetSubAreaMapId(subAreaId)
     local subAreaInfo = JSON.decode(Utils:ReadFile(self.SubAreaPath .. subAreaId .. ".json"))
 
-    return subAreaInfo.mapIds
+    if subAreaInfo then
+        return subAreaInfo.mapIds
+    end
+    return nil
 end
 
 function Zone:GetSubAreaMonsters(subAreaId)
     local subAreaInfo = JSON.decode(Utils:ReadFile(self.SubAreaPath .. subAreaId .. ".json"))
 
-    return subAreaInfo.monsters
+    if subAreaInfo then
+        return subAreaInfo.monsters
+    end
+    return nil
 end
 
 function Zone:GetSubAreaName(subAreaId)
     local subAreaInfo = JSON.decode(Utils:ReadFile(self.SubAreaPath .. subAreaId .. ".json"))
 
-    return subAreaInfo.subAreaName
+    if subAreaInfo then
+        return subAreaInfo.subAreaName
+    end
+    return nil
 end
 
 function Zone:GetArea(subAreaId)
     local subAreaInfo = JSON.decode(Utils:ReadFile(self.SubAreaPath .. subAreaId .. ".json"))
-    return subAreaInfo.areaId
+
+    if subAreaInfo then
+        return subAreaInfo.areaId
+    end
+    return nil
 end
 
 return Zone

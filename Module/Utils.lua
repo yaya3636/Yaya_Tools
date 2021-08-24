@@ -12,6 +12,7 @@ end
 
 function Utils:Print(msg, header, msgType)
     local prefabStr = ""
+
     msg = tostring(msg)
 
     if header ~= nil then
@@ -31,7 +32,7 @@ end
 
 function Utils:Dump(tbl)
     local function dmp(t, l, k)
-        if type (t) == "table" then
+        if type(t) == "table" then
             self:Print(string.format ("% s% s:", string.rep ("", l * 2 ), tostring (k)))
             for key, v in pairs(t) do
                 dmp(v, l + 1, key)
@@ -80,11 +81,19 @@ function Utils:ShuffleTbl(tbl)
 end
 
 function Utils:ReadFile(path)
-    local file = io.open(path, "rb") -- r read mode and b binary mode
-    if not file then return nil end
-    local content = file:read "*a" -- *a or *all reads the whole file
-    file:close()
-    return content
+    if self:FileExists(path) then
+        local file = io.open(path, "rb") -- r read mode and b binary mode
+        if not file then return nil end
+        local content = file:read "*a" -- *a or *all reads the whole file
+        file:close()
+        return content
+    end
+    return nil
 end
+
+function Utils:FileExists(path)
+    local f=io.open(path,"r")
+    if f~=nil then io.close(f) return true else return false end
+ end
 
 return Utils

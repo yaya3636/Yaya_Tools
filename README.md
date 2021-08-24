@@ -3,6 +3,8 @@
  
  1. Créer un dossier nommer YAYA a la racine d'Ankabot
  2. Déplacer tout les fichier dans le dossier YAYA
+
+ Les ID des Zone et sous zone sont dans le dossier AreaId
  
 ## Les fonction
  

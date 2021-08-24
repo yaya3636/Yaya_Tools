@@ -60,3 +60,10 @@
   * Parcours tout les éléments d'une table et ses sous tables en affichant leurs valeurs
   * Prend en paramètre une table
 
+* Utils:ShuffleTbl(tbl)
+  * Mélange les élément d'une table et retourne la table mélangé
+  * Prend en paramètre une table
+
+* Utils:ReadFile(path)
+  * Retourne le contenu d'un fichier
+  * Prend en paramètre le chemin du ficher 

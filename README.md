@@ -6,6 +6,14 @@
 
  Les ID des Zone et sous zone sont dans le dossier AreaId
  
+ Si une update dofus modifie des carte ou ajoute des monstres :
+ 1. Télécharger Pydofus
+ 2. Récupérer les fichier Areas.d2o, Items.d2o, Monsters.d2o, SubAreas.d2o dans Dofus\data\common
+ 3. Récupérer le fichier i18n_fr.d2i dans Dofus\data\i18n
+ 4. Convertisser les fichier en json grace a pydofus et placer les json dans YAYA\MajInfoJson
+ 5. Executer MonstersLootInfo.exe
+ 6. Un dossier YAYA a était créer avec les nouvelles valeurs
+ 
 ## Les fonction
  
 ## Zone

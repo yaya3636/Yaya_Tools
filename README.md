@@ -10,7 +10,7 @@
  
 ### Zone
  1. Pour utiliser les fonction Zone mettez cette ligne en haut de votre script lua :
-   1.Zone = dofile(global:getCurrentDirectory() .. "\\YAYA\\Module\\Zone.lua")
+    1.Zone = dofile(global:getCurrentDirectory() .. "\\YAYA\\Module\\Zone.lua")
 
 #### Area
 

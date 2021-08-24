@@ -6,7 +6,7 @@
 
  Les ID des Zone et sous zone sont dans le dossier AreaId
  
- Si une update dofus modifie des carte ou ajoute des monstres
+ Si une update dofus modifie des carte ou ajoute des monstres :
  1. Télécharger Pydofus
  2. Récupérer les fichier Areas.d2o, Items.d2o, Monsters.d2o, SubAreas.d2o dans Dofus\data\common
  3. Récupérer le fichier i18n_fr.d2i dans Dofus\data\i18n

@@ -8,7 +8,7 @@
  
 ## Les fonction
  
-### Zone
+## Zone
 1. Pour utiliser les fonction Zone mettez cette ligne en haut de votre script lua :
 
    Zone = dofile(global:getCurrentDirectory() .. "\\\YAYA\\\Module\\\Zone.lua")
@@ -45,7 +45,7 @@
   * Retourne l'idArea de la sous zone
   * Prend en paramètre l'ID de la sous zone
 
-### Utils
+## Utils
 1. Pour utiliser les fonction Zone mettez cette ligne en haut de votre script lua :
 
    Utils = dofile(global:getCurrentDirectory() .. "\\\YAYA\\\Module\\\Utils.lua")

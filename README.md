@@ -44,3 +44,14 @@
 * Zone:GetArea(subAreaId)
   * Retourne l'idArea de la sous zone
   * Prend en paramètre l'ID de la sous zone
+
+### Utils
+1. Pour utiliser les fonction Zone mettez cette ligne en haut de votre script lua :
+
+   Zone = dofile(global:getCurrentDirectory() .. "\\\YAYA\\\Module\\\Utils.lua")
+   
+* Utils:Print(msg, header, msgType) 
+  * Print un message dans la console Ankabot en fonction des paramètre
+  * Params 1 : Message a print
+  * Params 2 (facultatif) : Place un header avant le message ([header] message)
+  * params 3 (facultatif) : "warn" ou "error" Colorie le message et place un header d'avertissement, le params 2 et obligatoire

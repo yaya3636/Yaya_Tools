@@ -7,6 +7,11 @@
 ## Les fonction
  
 ### Zone
+#### Area
 
-
-
+* Zone:GetAreaMapId(areaId) 
+ * Retourne toutes les mapId d'une zone dans une table {}
+ * Prend en paramètre l'ID de l'area
+* Zone:GetAreaName(areaId)
+ * Retourne le nom de la zone
+ * Prend en paramètre l'ID de l'area

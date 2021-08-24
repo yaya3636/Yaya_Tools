@@ -13,7 +13,7 @@
 
    Zone = dofile(global:getCurrentDirectory() .. "\\\YAYA\\\Module\\\Zone.lua")
 
-#### Area
+### Area
 
 * Zone:GetAreaMapId(areaId) 
   * Retourne toutes les mapId d'une zone dans une table {}
@@ -27,7 +27,7 @@
   * Retourne touts les ID des sous zone dans une table {}
   * Prend en paramètre l'ID de l'area
 
-#### SubArea
+### SubArea
 
 * Zone:GetSubAreaMapId(subAreaId) 
   * Retourne toutes les mapId d'une sous zone dans une table {}

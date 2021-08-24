@@ -56,3 +56,7 @@
   * Params 2 (facultatif) : Place un header avant le message ([header] message)
   * params 3 (facultatif) : "warn" ou "error" Colorie le message et place un header d'avertissement, le params 2 et obligatoire ([Avertissement][header] message)
 
+* Utils:Dump(tbl)
+  * Parcours tout les éléments d'une table et ses sous tables en affichant leurs valeurs
+  * Prend en paramètre une table
+

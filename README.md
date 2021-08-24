@@ -53,6 +53,20 @@
   * Retourne l'idArea de la sous zone
   * Params 1 : ID de la sous zone
 
+## Movement
+
+1. Pour utiliser les fonction Movement mettez cette ligne en haut de votre script lua :
+
+   Movement = dofile(global:getCurrentDirectory() .. "\\\YAYA\\\Module\\\Movement.lua")
+   
+* Movement:RoadZone(tblMapId) 
+  * Déplace le bot en fonction des mapId dans la table
+  * Params 1 : Table de mapId
+
+* Movement:InMapChecker(tblMapId) 
+  * Retourne si le bot et présent sur une des mapId de la table
+  * Params 1 : Table de mapId
+
 ## Monsters
 1. Pour utiliser les fonction Monsters mettez cette ligne en haut de votre script lua :
 

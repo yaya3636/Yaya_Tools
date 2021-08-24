@@ -45,6 +45,31 @@
   * Retourne l'idArea de la sous zone
   * Params 1 : ID de la sous zone
 
+## Monsters
+1. Pour utiliser les fonction Monsters mettez cette ligne en haut de votre script lua :
+
+   Monsters = dofile(global:getCurrentDirectory() .. "\\\YAYA\\\Module\\\Monsters.lua")
+
+* Monsters:GetMonsterName(idMonster) 
+  * Retourne le nom du monstre
+  * Params 1 : ID du monstre
+
+* Monsters:GetFavoriteSubArea(idMonster) 
+  * Retourne l'ID favorite de la sous zone du monstre
+  * Params 1 : ID du monstre
+
+* Monsters:GetMonsterDrops(idMonster) 
+  * Retourne tout les ID des items dropable sur le monstre dans une table {}
+  * Params 1 : ID du monstre
+
+* Monsters:GetMonsterSubArea(idMonster) 
+  * Retourne tout les ID des sous zone ou le monstre et présent dans une table {}
+  * Params 1 : ID du monstre
+  * 
+* Monsters:GetMonsterIdByDropId(dropId) 
+  * Retourne tout les ID des monstres qui drop cette item dans une table {}
+  * Params 1 : ID de l'item
+ 
 ## Utils
 1. Pour utiliser les fonction Utils mettez cette ligne en haut de votre script lua :
 

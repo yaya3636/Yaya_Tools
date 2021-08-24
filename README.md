@@ -16,3 +16,25 @@
 * Zone:GetAreaName(areaId)
   * Retourne le nom de la zone
   * Prend en paramètre l'ID de l'area
+
+* Zone:GetSubArea(areaId)
+  * Retourne touts les ID des sous zone dans une table {}
+  * Prend en paramètre l'ID de l'area
+
+#### SubArea
+
+* Zone:GetSubAreaMapId(subAreaId) 
+  * Retourne toutes les mapId d'une sous zone dans une table {}
+  * Prend en paramètre l'ID de la sous zone
+ 
+* Zone:GetSubAreaName(subAreaId)
+  * Retourne le nom de la sous zone
+  * Prend en paramètre l'ID de la sous zone
+
+* Zone:GetSubAreaMonsters(subAreaId)
+  * Retourne touts les monstersId présent dans la sous zone dans une table {}
+  * Prend en paramètre l'ID de la sous zone
+
+* Zone:GetArea(subAreaId)
+  * Retourne l'idArea de la sous zone
+  * Prend en paramètre l'ID de la sous zone

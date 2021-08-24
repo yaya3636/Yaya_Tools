@@ -6,7 +6,7 @@ Utils = dofile(global:getCurrentDirectory() .. "\\YAYA\\Module\\Utils.lua")
 Zone.SubAreaPath = global:getCurrentDirectory() .. "\\YAYA\\SubArea\\"
 Zone.AreaPath = global:getCurrentDirectory() .. "\\YAYA\\Area\\"
 
-function Zone:GetAreaMapid(areaId)
+function Zone:GetAreaMapId(areaId)
     local areaInfo = JSON.decode(Utils:ReadFile(self.AreaPath .. areaId .. ".json"))
 
     local mapId = {}

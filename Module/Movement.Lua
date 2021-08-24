@@ -26,7 +26,6 @@ end
 function Movement:RoadZone(tblMapId)
     if tblMapId ~= nil and Utils:LenghtOfTable(tblMapId) > 0 then
         if map:currentMapId() == self.RZNextMapId or self.RZNextMapId == -1 then
-            --Utils:Print("Get next rand roadMapId")
 
             local maxDist = 0
             local tblMapIdDist = {}
@@ -37,10 +36,8 @@ function Movement:RoadZone(tblMapId)
                 if dist > maxDist then
                     maxDist = dist
                 end
-                --Print("Dist : "..dist)
                 table.insert(tblMapIdDist, ins)
             end
-            --Print("MaxDist : "..maxDist)
 
             tblMapIdDist = Utils:ShuffleTbl(tblMapIdDist)
 
@@ -51,7 +48,6 @@ function Movement:RoadZone(tblMapId)
                 end
             end
 
-            --Utils:Print("Next roadMapId = "..self.RZNextMapId)
 
             if not map:loadMove(self.RZNextMapId) then
                 Utils:Print("Impossible de charger un chemin jusqu'a la mapId : ("..self.RZNextMapId..") changement de map avant re tentative", "RoadZone", "warn")

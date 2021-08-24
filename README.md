@@ -17,33 +17,33 @@
 
 * Zone:GetAreaMapId(areaId) 
   * Retourne toutes les mapId d'une zone dans une table {}
-  * Prend en paramètre l'ID de l'area
+  * Params 1 : ID de l'area
  
 * Zone:GetAreaName(areaId)
   * Retourne le nom de la zone
-  * Prend en paramètre l'ID de l'area
+  * Params 1 : ID de l'area
 
 * Zone:GetSubArea(areaId)
   * Retourne touts les ID des sous zone dans une table {}
-  * Prend en paramètre l'ID de l'area
+  * Params 1 : ID de l'area
 
 ### SubArea
 
 * Zone:GetSubAreaMapId(subAreaId) 
   * Retourne toutes les mapId d'une sous zone dans une table {}
-  * Prend en paramètre l'ID de la sous zone
+  * Params 1 : ID de la sous zone
  
 * Zone:GetSubAreaName(subAreaId)
   * Retourne le nom de la sous zone
-  * Prend en paramètre l'ID de la sous zone
+  * Params 1 : ID de la sous zone
 
 * Zone:GetSubAreaMonsters(subAreaId)
   * Retourne touts les monstersId présent dans la sous zone dans une table {}
-  * Prend en paramètre l'ID de la sous zone
+  * Params 1 : ID de la sous zone
 
 * Zone:GetArea(subAreaId)
   * Retourne l'idArea de la sous zone
-  * Prend en paramètre l'ID de la sous zone
+  * Params 1 : ID de la sous zone
 
 ## Utils
 1. Pour utiliser les fonction Utils mettez cette ligne en haut de votre script lua :
@@ -58,12 +58,21 @@
 
 * Utils:Dump(tbl)
   * Parcours tout les éléments d'une table et ses sous tables en affichant leurs valeurs
-  * Prend en paramètre une table
+  * Params 1 : La table
+
+* Utils:GetTableValue(index, tbl)
+  * Retourne la valeur d'un élément d'une table a l'index indiqué
+  * Params 1 : L'index souhaité
+  * Params 2 : La table
+
+* Utils:LenghtOfTable(tbl)
+  * Retourne la taille de la table (utile quand #tbl bug)
+  * Params 1 : La table 
 
 * Utils:ShuffleTbl(tbl)
   * Mélange les élément d'une table et retourne la table mélangé
-  * Prend en paramètre une table
+  * Params 1 : La table 
 
 * Utils:ReadFile(path)
   * Retourne le contenu d'un fichier
-  * Prend en paramètre le chemin du ficher 
+  * Params 1 : Chemin du fichier

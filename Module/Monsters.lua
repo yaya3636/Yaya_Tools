@@ -3,8 +3,8 @@ Monsters = {}
 JSON = dofile(global:getCurrentDirectory() .. "\\YAYA\\Module\\JSON.lua")
 Utils = dofile(global:getCurrentDirectory() .. "\\YAYA\\Module\\Utils.lua")
 
-Monsters.MonstersPath = global:getCurrentDirectory() .. "\\YAYA\\Monsters\\monsters.json"
-Monsters.MonstersFilesPath = global:getCurrentDirectory() .. "\\YAYA\\Monsters\\MonstersFilesById\\"
+Monsters.MonstersPath = global:getCurrentDirectory() .. "\\YAYA\\Data\\Monsters\\monsters.json"
+Monsters.MonstersFilesPath = global:getCurrentDirectory() .. "\\YAYA\\Data\\Monsters\\MonstersFilesById\\"
 
 function Monsters:GetMonsterName(idMonster)
     local monsterInfo = JSON.decode(Utils:ReadFile(self.MonstersFilesPath .. idMonster .. ".json"))

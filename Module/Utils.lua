@@ -80,6 +80,31 @@ function Utils:ShuffleTbl(tbl)
     return ret
 end
 
+function Utils:GenerateDateTime(format)
+    local dateTimeTable = os.date('*t')
+    local ret
+
+    if format == "h" then
+        ret = dateTimeTable.hour
+    elseif format == "m" then
+        ret = dateTimeTable.min
+    elseif format == "s" then
+        ret = dateTimeTable.sec
+    elseif format == "hm" then
+        ret = { hour = dateTimeTable.hour, min = dateTimeTable.min }
+    elseif format == "ms" then
+        ret = { min = dateTimeTable.min, sec = dateTimeTable.sec }
+    elseif format == "hms" then
+        ret = { hour = dateTimeTable.hour, min = dateTimeTable.min, sec = dateTimeTable.sec }
+    end
+
+    if ret == nil then 
+        Utils:Print("Erreur format", "GenerateDateTime", "error")
+    else
+        return ret
+    end
+end
+
 function Utils:ReadFile(path)
     if self:FileExists(path) then
         local file = io.open(path, "rb") -- r read mode and b binary mode

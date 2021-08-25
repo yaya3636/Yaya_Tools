@@ -3,8 +3,8 @@ Zone = {}
 JSON = dofile(global:getCurrentDirectory() .. "\\YAYA\\Module\\JSON.lua")
 Utils = dofile(global:getCurrentDirectory() .. "\\YAYA\\Module\\Utils.lua")
 
-Zone.SubAreaPath = global:getCurrentDirectory() .. "\\YAYA\\SubArea\\"
-Zone.AreaPath = global:getCurrentDirectory() .. "\\YAYA\\Area\\"
+Zone.SubAreaPath = global:getCurrentDirectory() .. "\\YAYA\\Data\\SubArea\\"
+Zone.AreaPath = global:getCurrentDirectory() .. "\\YAYA\\Data\\Area\\"
 
 function Zone:GetAreaMapId(areaId)
     local areaInfo = JSON.decode(Utils:ReadFile(self.AreaPath .. areaId .. ".json"))

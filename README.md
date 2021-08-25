@@ -4,11 +4,11 @@
  1. Créer un dossier nommer YAYA a la racine d'Ankabot
  2. Déplacer tout les fichier dans le dossier YAYA
 
- Les ID des Zone et sous zone sont dans le dossier AreaId
+ Les ID des Zone et sous zone sont dans les fichier nommer areaId.txt et subAreaId.txt
  
  Si une update dofus modifie des carte ou ajoute des monstres :
  1. Télécharger Pydofus
- 2. Récupérer les fichier Areas.d2o, Items.d2o, Monsters.d2o, SubAreas.d2o dans Dofus\data\common
+ 2. Récupérer les fichier Areas.d2o, Items.d2o, Monsters.d2o, SubAreas.d2o, Recipes.d2o dans Dofus\data\common
  3. Récupérer le fichier i18n_fr.d2i dans Dofus\data\i18n
  4. Convertisser les fichier en json grace a pydofus et placer les json dans YAYA\MajInfoJson
  5. Executer MonstersLootInfo.exe
@@ -53,6 +53,20 @@
   * Retourne l'idArea de la sous zone
   * Params 1 : ID de la sous zone
 
+## Movement
+
+1. Pour utiliser les fonction Movement mettez cette ligne en haut de votre script lua :
+
+   Movement = dofile(global:getCurrentDirectory() .. "\\\YAYA\\\Module\\\Movement.lua")
+   
+* Movement:RoadZone(tblMapId) 
+  * Déplace le bot en fonction des mapId dans la table
+  * Params 1 : Table de mapId
+
+* Movement:InMapChecker(tblMapId) 
+  * Retourne si le bot et présent sur une des mapId de la table
+  * Params 1 : Table de mapId
+
 ## Monsters
 1. Pour utiliser les fonction Monsters mettez cette ligne en haut de votre script lua :
 
@@ -77,7 +91,36 @@
 * Monsters:GetMonsterIdByDropId(dropId) 
   * Retourne tout les ID des monstres qui drop cette item dans une table {}
   * Params 1 : ID de l'item
- 
+
+## Craft
+1. Pour utiliser les fonction Craft mettez cette ligne en haut de votre script lua :
+
+   Craft = dofile(global:getCurrentDirectory() .. "\\\YAYA\\\Module\\\Craft.lua")
+
+* Craft:GetCraftInfo(idCraft) 
+  * Retourne une table contenant les info du craft (craft.jobId, craft.craftLvl, craft.typeId, craft.skillId, craft.ingredients{})
+  * Params 1 : ID de l'item
+
+* Craft:GetIngredients(idCraft) 
+  * Retourne une table contenant les info des ingredients du craft (ingredient.ingredientId, ingredient.quantity)
+  * Params 1 : ID de l'item
+
+* Craft:GetJobId(idCraft) 
+  * Retourne le jobId du craft
+  * Params 1 : ID de l'item
+
+* Craft:GetSkillId(idCraft) 
+  * Retourne le skillId du craft
+  * Params 1 : ID de l'item
+
+* Craft:GetLevel(idCraft) 
+  * Retourne le level du craft
+  * Params 1 : ID de l'item
+
+ * Craft:GetTypeId(idCraft) 
+  * Retourne le typeId du craft
+  * Params 1 : ID de l'item
+
 ## Utils
 1. Pour utiliser les fonction Utils mettez cette ligne en haut de votre script lua :
 

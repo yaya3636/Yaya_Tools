@@ -3,8 +3,43 @@ Zone = {}
 JSON = dofile(global:getCurrentDirectory() .. "\\YAYA\\Module\\JSON.lua")
 Utils = dofile(global:getCurrentDirectory() .. "\\YAYA\\Module\\Utils.lua")
 
+Zone.MapsPath = global:getCurrentDirectory() .. "\\YAYA\\Data\\Maps\\maps.json"
 Zone.SubAreaPath = global:getCurrentDirectory() .. "\\YAYA\\Data\\SubArea\\"
 Zone.AreaPath = global:getCurrentDirectory() .. "\\YAYA\\Data\\Area\\"
+Zone.BigDataSubAreas = JSON.decode(Utils:ReadFile(global:getCurrentDirectory() .. "\\YAYA\\Data\\SubArea\\SubAreas.json"))
+
+function Zone:RetrieveSubAreaContainingRessource(gatherId, minResMap)
+    minResMap = minResMap or 1
+
+    local mapsDecode = JSON.decode(Utils:ReadFile(self.MapsPath))
+
+    local subArea = {}
+
+    for kAreaId, vArea in pairs(mapsDecode) do
+        if type(vArea) == "table" then
+            for kSubAreaId, vSubArea in pairs(vArea) do
+                if type(vSubArea) == "table" then
+                    for _, vMap in pairs(vSubArea) do
+                        if type(vMap) == "table" then
+                            for _, vGather in pairs(vMap.gatherElements) do
+                                if Utils:Equal(vGather.gatherId, gatherId) and vGather.count >= minResMap then
+                                    if subArea[tostring(kSubAreaId)] == nil then
+                                        subArea[tostring(kSubAreaId)] = {}
+                                    end
+                                    table.insert(subArea[tostring(kSubAreaId)], vMap)
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    return subArea
+end
+
+
 
 function Zone:GetAreaMapId(areaId)
     local areaInfo = JSON.decode(Utils:ReadFile(self.AreaPath .. areaId .. ".json"))
@@ -75,6 +110,32 @@ function Zone:GetArea(subAreaId)
 
     if subAreaInfo then
         return subAreaInfo.areaId
+    end
+    return nil
+end
+
+function Zone:GetAreaIdByMapId(mapId)
+    if self.BigDataSubAreas then
+        for _, vSubArea in pairs(self.BigDataSubAreas) do
+            for _, vMapId in pairs(vSubArea.mapIds) do
+                if Utils:Equal(vMapId, mapId) then
+                    return vSubArea.areaId
+                end
+            end
+        end
+    end
+    return nil
+end
+
+function Zone:GetSubAreaIdByMapId(mapId)
+    if self.BigDataSubAreas then
+        for _, vSubArea in pairs(self.BigDataSubAreas) do
+            for _, vMapId in pairs(vSubArea.mapIds) do
+                if Utils:Equal(vMapId, mapId) then
+                    return vSubArea.id
+                end
+            end
+        end
     end
     return nil
 end

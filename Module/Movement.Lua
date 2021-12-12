@@ -90,20 +90,57 @@ end
 
 Movement.WorkshopInfo = {
     ["Bricoleur"] = {
-        ["Astrub"] = { mapId = 192940038, singleWorkshopJob = true, workshopId = {516170,  515689} }
+        skillId = {171},
+        ["Astrub"] = { mapId = 192940038, workshopId = {
+            ["171"] = {
+                516170,
+                515689
+            }
+        }}
     },
     ["Mineur"] = {
+        skillId = {32, 48},
         ["Astrub"] = { mapId = 192939010, workshopId = {
-            ["Fondre"] = {
+            ["32"] = {
                 515660,
                 515666
             },
-            ["Polir"] = {
+            ["48"] = {
                 515702
             }
         }}
     },
-
+    ["Bijoutier"] = {
+        skillId = {12},
+        ["Astrub"] = { mapId = 192937990, workshopId = {
+            ["12"] = {
+                515740,
+                515739,
+                516168,
+                516169
+            }
+        }}
+    },
+    ["Bûcheron"] = {
+        skillId = {101},
+        ["Astrub"] = { mapId = 192940042, workshopId = {
+            ["101"] = {
+                515879,
+                515951,
+                515952
+            }
+        }}
+    },
+    ["Alchimiste"] = {
+        skillId = {23},
+        ["Astrub"] = { mapId = 192937988, workshopId = {
+            ["23"] = {
+                515520,
+                515549,
+                515516
+            }
+        }}
+    },
 }
 
 

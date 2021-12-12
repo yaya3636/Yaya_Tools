@@ -74,6 +74,15 @@ function Utils:LenghtOfTable(tbl)
     end
 end
 
+function Utils:ExistKeyTable(t, key)
+    for k, _ in pairs(t) do
+        if self:Equal(k, key) then
+            return true
+        end
+    end
+    return false
+end
+
 function Utils:ShuffleTbl(tbl)
     local ret = tbl
 

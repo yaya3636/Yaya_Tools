@@ -39,8 +39,6 @@ function Zone:RetrieveSubAreaContainingRessource(gatherId, minResMap)
     return subArea
 end
 
-
-
 function Zone:GetAreaMapId(areaId)
     local areaInfo = JSON.decode(Utils:ReadFile(self.AreaPath .. areaId .. ".json"))
 

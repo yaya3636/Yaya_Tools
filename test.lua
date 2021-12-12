@@ -152,6 +152,10 @@ function constructPath(toMapId)
     local pathToRet = {}
     local dijkstra = newDijkstra()
     dijkstra:run(Graph, 97261059)--map:currentMapId())
+
+    Utils:Print(dijkstra:hasPathTo(97261059))
+    Utils:Print(dijkstra:hasPathTo(972610))
+
     local path = dijkstra:getPathTo(toMapId)
 
     for i = 0,path:size()-1 do
@@ -159,7 +163,7 @@ function constructPath(toMapId)
         --Utils:Print('# from ' .. path:get(i):from() .. ' to ' .. path:get(i):to() .. ' ( distance: ' .. path:get(i).weight .. ' )')
     end
 
-    return pathToRet
+    --return pathToRet
 end
 
 function getChangeMapInfo(fromMapId, toMapId)

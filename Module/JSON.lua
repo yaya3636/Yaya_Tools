@@ -68,17 +68,22 @@ local function encode_table(val, stack)
     -- Treat as array -- check keys are valid and it is not sparse
     local n = 0
     for k in pairs(val) do
-      if type(k) ~= "number" then
-        error("invalid table: mixed or invalid key types")
+      if type(k) ~= "function" then
+        if type(k) ~= "number" then
+          error("invalid table: mixed or invalid key types")
+        end
       end
       n = n + 1
     end
+
     if n ~= #val then
       error("invalid table: sparse array")
     end
     -- Encode
     for i, v in ipairs(val) do
-      table.insert(res, encode(v, stack))
+      if type(v) ~= "function" then
+        table.insert(res, encode(v, stack))
+      end
     end
     stack[val] = nil
     return "[" .. table.concat(res, ",") .. "]"
@@ -86,10 +91,12 @@ local function encode_table(val, stack)
   else
     -- Treat as an object
     for k, v in pairs(val) do
-      if type(k) ~= "string" then
-        error("invalid table: mixed or invalid key types")
+      if type(v) ~= "function" then
+        if type(k) ~= "string" then
+          error("invalid table: mixed or invalid key types")
+        end
+        table.insert(res, encode(k, stack) .. ":" .. encode(v, stack))  
       end
-      table.insert(res, encode(k, stack) .. ":" .. encode(v, stack))
     end
     stack[val] = nil
     return "{" .. table.concat(res, ",") .. "}"

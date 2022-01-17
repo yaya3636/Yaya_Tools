@@ -2,6 +2,8 @@ Utils =  {}
 
 Utils.cellAray = {}
 
+Utils.colorPrint = {}
+
 function Utils:Equal(str1, str2)
     if str1 == nil then
         str1 = ""
@@ -12,8 +14,12 @@ function Utils:Equal(str1, str2)
     return string.lower(tostring(str1)) == string.lower(tostring(str2))
 end
 
-function Utils:Print(msg, header, msgType)
+function Utils:Print(msg, header, color)
     local prefabStr = ""
+
+    if color == nil then
+        color = self:ColorPicker(header)
+    end
 
     msg = tostring(msg)
 
@@ -23,13 +29,20 @@ function Utils:Print(msg, header, msgType)
         prefabStr = msg
     end
 
-    if msgType == nil then
+    if color == nil then
         global:printSuccess(prefabStr)
-    elseif string.lower(msgType) == "warn" then
-        global:printMessage("[WARNING]["..header.."] "..msg)
-    elseif string.lower(msgType) == "error" then
-        global:printError("[ERROR]["..header.."] "..msg)
+    else
+        global:printColor(color, prefabStr)
     end
+end
+
+function Utils:ColorPicker(header)
+    for kHeader, vColor in pairs(self.colorPrint) do
+        if self:Equal(kHeader, header) then
+            return vColor
+        end
+    end
+    return nil
 end
 
 function Utils:Dump(tbl, printDelay)
@@ -125,6 +138,12 @@ function Utils:ReadFile(path)
     local content = file:read "*a" -- *a or *all reads the whole file
     file:close()
     return content
+end
+
+function Utils:WriteFile(path, content)
+    local file = io.open(path, "w+") -- r read mode and b binary mode
+    file:write(content)
+    file:close()
 end
 
 function Utils:FileExists(path)

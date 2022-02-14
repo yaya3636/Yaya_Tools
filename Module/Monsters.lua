@@ -8,11 +8,11 @@ Monsters.MonstersFilesPath = global:getCurrentDirectory() .. "\\YAYA\\Data\\Mons
 Monsters.NonModifiedMonstersLoaded = false
 
 Monsters.NonModifiedMonsters = {}
-Monsters.ModifiedMonsters = JSON.decode(Utils:ReadFile(global:getCurrentDirectory() .. "\\YAYA\\Data\\Monsters\\monsters.json"))
+Monsters.ModifiedMonsters = JSON:decode(Utils:ReadFile(global:getCurrentDirectory() .. "\\YAYA\\Data\\Monsters\\monsters.json"))
 
 
 function Monsters:GetMonsterName(idMonster)
-    local monsterInfo = JSON.decode(Utils:ReadFile(self.MonstersFilesPath .. idMonster .. ".json"))
+    local monsterInfo = JSON:decode(Utils:ReadFile(self.MonstersFilesPath .. idMonster .. ".json"))
 
     if monsterInfo then
         return monsterInfo.monsterName
@@ -21,7 +21,7 @@ function Monsters:GetMonsterName(idMonster)
 end
 
 function Monsters:GetFavoriteSubArea(idMonster)
-    local monsterInfo = JSON.decode(Utils:ReadFile(self.MonstersFilesPath .. idMonster .. ".json"))
+    local monsterInfo = JSON:decode(Utils:ReadFile(self.MonstersFilesPath .. idMonster .. ".json"))
 
     if monsterInfo then
         return monsterInfo.favoriteSubArea
@@ -30,7 +30,7 @@ function Monsters:GetFavoriteSubArea(idMonster)
 end
 
 function Monsters:GetMonsterDrops(idMonster)
-    local monsterInfo = JSON.decode(Utils:ReadFile(self.MonstersFilesPath .. idMonster .. ".json"))
+    local monsterInfo = JSON:decode(Utils:ReadFile(self.MonstersFilesPath .. idMonster .. ".json"))
 
     if monsterInfo then
         return monsterInfo.drops
@@ -39,7 +39,7 @@ function Monsters:GetMonsterDrops(idMonster)
 end
 
 function Monsters:GetMonsterSubArea(idMonster)
-    local monsterInfo = JSON.decode(Utils:ReadFile(self.MonstersFilesPath .. idMonster .. ".json"))
+    local monsterInfo = JSON:decode(Utils:ReadFile(self.MonstersFilesPath .. idMonster .. ".json"))
 
     if monsterInfo then
         return monsterInfo.subAreas
@@ -64,7 +64,7 @@ end
 function Monsters:GetMonstersInfoByGrade(idMonster, grade)
     if not self.NonModifiedMonstersLoaded then
         Utils:Print("Veuillez patientez quelque instants chargement des données !", "Info")
-        self.NonModifiedMonsters = JSON.decode(Utils:ReadFile(global:getCurrentDirectory() .. "\\YAYA\\Data\\Monsters\\NoModifiedMonsters.json"))
+        self.NonModifiedMonsters = JSON:decode(Utils:ReadFile(global:getCurrentDirectory() .. "\\YAYA\\Data\\Monsters\\NoModifiedMonsters.json"))
         self.NonModifiedMonstersLoaded = true
     end
     

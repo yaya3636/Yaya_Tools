@@ -1,26 +1,3 @@
---
--- json.lua
---
--- Copyright (c) 2020 rxi
---
--- Permission is hereby granted, free of charge, to any person obtaining a copy of
--- this software and associated documentation files (the "Software"), to deal in
--- the Software without restriction, including without limitation the rights to
--- use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
--- of the Software, and to permit persons to whom the Software is furnished to do
--- so, subject to the following conditions:
---
--- The above copyright notice and this permission notice shall be included in all
--- copies or substantial portions of the Software.
---
--- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
--- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
--- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
--- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
--- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
--- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
--- SOFTWARE.
---
 local json = { _version = "0.1.2" }
 
 -------------------------------------------------------------------------------
@@ -68,22 +45,17 @@ local function encode_table(val, stack)
     -- Treat as array -- check keys are valid and it is not sparse
     local n = 0
     for k in pairs(val) do
-      if type(k) ~= "function" then
-        if type(k) ~= "number" then
-          error("invalid table: mixed or invalid key types")
-        end
+      if type(k) ~= "number" then
+        error("invalid table: mixed or invalid key types")
       end
       n = n + 1
     end
-
     if n ~= #val then
       error("invalid table: sparse array")
     end
     -- Encode
     for i, v in ipairs(val) do
-      if type(v) ~= "function" then
-        table.insert(res, encode(v, stack))
-      end
+      table.insert(res, encode(v, stack))
     end
     stack[val] = nil
     return "[" .. table.concat(res, ",") .. "]"
@@ -91,12 +63,10 @@ local function encode_table(val, stack)
   else
     -- Treat as an object
     for k, v in pairs(val) do
-      if type(v) ~= "function" then
-        if type(k) ~= "string" then
-          error("invalid table: mixed or invalid key types")
-        end
-        table.insert(res, encode(k, stack) .. ":" .. encode(v, stack))  
+      if type(k) ~= "string" then
+        error("invalid table: mixed or invalid key types")
       end
+      table.insert(res, encode(k, stack) .. ":" .. encode(v, stack))
     end
     stack[val] = nil
     return "{" .. table.concat(res, ",") .. "}"
@@ -378,10 +348,9 @@ parse = function(str, idx)
 end
 
 
-function json.decode(str)
+function json:decode(str)
   if type(str) ~= "string" then
-    --error("expected argument of type string, got " .. type(str))
-    return nil
+    error("expected argument of type string, got " .. type(str))
   end
   local res, idx = parse(str, next_char(str, 1, space_chars, true))
   idx = next_char(str, idx, space_chars, true)

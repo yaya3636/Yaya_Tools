@@ -7,7 +7,7 @@ Craft.CraftPath = global:getCurrentDirectory() .. "\\YAYA\\Data\\Recipes\\"
 
 
 function Craft:GetCraftInfo(craftId)
-    local craftInfo = JSON.decode(Utils:ReadFile(self.CraftPath .. craftId .. ".json"))
+    local craftInfo = JSON:decode(Utils:ReadFile(self.CraftPath .. craftId .. ".json"))
 
     if craftInfo then
         return craftInfo
@@ -16,7 +16,7 @@ function Craft:GetCraftInfo(craftId)
 end
 
 function Craft:GetJobId(craftId)
-    local craftInfo = JSON.decode(Utils:ReadFile(self.CraftPath .. craftId .. ".json"))
+    local craftInfo = JSON:decode(Utils:ReadFile(self.CraftPath .. craftId .. ".json"))
 
     if craftInfo then
         return craftInfo.jobId
@@ -25,7 +25,7 @@ function Craft:GetJobId(craftId)
 end
 
 function Craft:GetSkillId(craftId)
-    local craftInfo = JSON.decode(Utils:ReadFile(self.CraftPath .. craftId .. ".json"))
+    local craftInfo = JSON:decode(Utils:ReadFile(self.CraftPath .. craftId .. ".json"))
 
     if craftInfo then
         return craftInfo.skillId
@@ -34,7 +34,7 @@ function Craft:GetSkillId(craftId)
 end
 
 function Craft:GetLevel(craftId)
-    local craftInfo = JSON.decode(Utils:ReadFile(self.CraftPath .. craftId .. ".json"))
+    local craftInfo = JSON:decode(Utils:ReadFile(self.CraftPath .. craftId .. ".json"))
 
     if craftInfo then
         return craftInfo.craftLvl
@@ -43,7 +43,7 @@ function Craft:GetLevel(craftId)
 end
 
 function Craft:GetTypeId(craftId)
-    local craftInfo = JSON.decode(Utils:ReadFile(self.CraftPath .. craftId .. ".json"))
+    local craftInfo = JSON:decode(Utils:ReadFile(self.CraftPath .. craftId .. ".json"))
 
     if craftInfo then
         return craftInfo.typeId
@@ -52,7 +52,7 @@ function Craft:GetTypeId(craftId)
 end
 
 function Craft:GetIngredients(craftId)
-    local craftInfo = JSON.decode(Utils:ReadFile(self.CraftPath .. craftId .. ".json"))
+    local craftInfo = JSON:decode(Utils:ReadFile(self.CraftPath .. craftId .. ".json"))
 
     if craftInfo then
         return craftInfo.ingredients

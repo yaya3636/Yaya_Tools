@@ -132,6 +132,14 @@ function Utils:GenerateDateTime(format)
     end
 end
 
+function Utils:ExecuteWinCMD(cmd, onlyCmd)
+    if onlyCmd then
+        os.execute(cmd)
+    else
+        os.execute(cmd .. " %ComSpec% /D /E:ON /K")
+    end
+end
+
 function Utils:ReadFile(path)
     local file = io.open(path, "rb") -- r read mode and b binary mode
     if not file then return nil end

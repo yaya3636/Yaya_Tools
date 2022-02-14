@@ -6,12 +6,12 @@ Utils = dofile(global:getCurrentDirectory() .. "\\YAYA\\Module\\Utils.lua")
 Zone.MapsPath = global:getCurrentDirectory() .. "\\YAYA\\Data\\Maps\\maps.json"
 Zone.SubAreaPath = global:getCurrentDirectory() .. "\\YAYA\\Data\\SubArea\\"
 Zone.AreaPath = global:getCurrentDirectory() .. "\\YAYA\\Data\\Area\\"
-Zone.BigDataSubAreas = JSON.decode(Utils:ReadFile(global:getCurrentDirectory() .. "\\YAYA\\Data\\SubArea\\SubAreas.json"))
+Zone.BigDataSubAreas = JSON:decode(Utils:ReadFile(global:getCurrentDirectory() .. "\\YAYA\\Data\\SubArea\\SubAreas.json"))
 
 function Zone:RetrieveSubAreaContainingRessource(gatherId, minResMap)
     minResMap = minResMap or 1
 
-    local mapsDecode = JSON.decode(Utils:ReadFile(self.MapsPath))
+    local mapsDecode = JSON:decode(Utils:ReadFile(self.MapsPath))
 
     local subArea = {}
 
@@ -40,7 +40,7 @@ function Zone:RetrieveSubAreaContainingRessource(gatherId, minResMap)
 end
 
 function Zone:GetAreaMapId(areaId)
-    local areaInfo = JSON.decode(Utils:ReadFile(self.AreaPath .. areaId .. ".json"))
+    local areaInfo = JSON:decode(Utils:ReadFile(self.AreaPath .. areaId .. ".json"))
 
     if areaInfo then
         local mapId = {}
@@ -59,7 +59,7 @@ function Zone:GetAreaMapId(areaId)
 end
 
 function Zone:GetAreaName(areaId)
-    local areaInfo = JSON.decode(Utils:ReadFile(self.AreaPath .. areaId .. ".json"))
+    local areaInfo = JSON:decode(Utils:ReadFile(self.AreaPath .. areaId .. ".json"))
 
     if areaInfo then
         return areaInfo.areaName
@@ -68,7 +68,7 @@ function Zone:GetAreaName(areaId)
 end
 
 function Zone:GetSubArea(areaId)
-    local areaInfo = JSON.decode(Utils:ReadFile(self.AreaPath .. areaId .. ".json"))
+    local areaInfo = JSON:decode(Utils:ReadFile(self.AreaPath .. areaId .. ".json"))
 
     if areaInfo then
         return areaInfo.subArea
@@ -77,7 +77,7 @@ function Zone:GetSubArea(areaId)
 end
 
 function Zone:GetSubAreaMapId(subAreaId)
-    local subAreaInfo = JSON.decode(Utils:ReadFile(self.SubAreaPath .. subAreaId .. ".json"))
+    local subAreaInfo = JSON:decode(Utils:ReadFile(self.SubAreaPath .. subAreaId .. ".json"))
 
     if subAreaInfo then
         return subAreaInfo.mapIds
@@ -86,7 +86,7 @@ function Zone:GetSubAreaMapId(subAreaId)
 end
 
 function Zone:GetSubAreaMonsters(subAreaId)
-    local subAreaInfo = JSON.decode(Utils:ReadFile(self.SubAreaPath .. subAreaId .. ".json"))
+    local subAreaInfo = JSON:decode(Utils:ReadFile(self.SubAreaPath .. subAreaId .. ".json"))
 
     if subAreaInfo then
         return subAreaInfo.monsters
@@ -95,7 +95,7 @@ function Zone:GetSubAreaMonsters(subAreaId)
 end
 
 function Zone:GetSubAreaName(subAreaId)
-    local subAreaInfo = JSON.decode(Utils:ReadFile(self.SubAreaPath .. subAreaId .. ".json"))
+    local subAreaInfo = JSON:decode(Utils:ReadFile(self.SubAreaPath .. subAreaId .. ".json"))
 
     if subAreaInfo then
         return subAreaInfo.subAreaName
@@ -104,7 +104,7 @@ function Zone:GetSubAreaName(subAreaId)
 end
 
 function Zone:GetArea(subAreaId)
-    local subAreaInfo = JSON.decode(Utils:ReadFile(self.SubAreaPath .. subAreaId .. ".json"))
+    local subAreaInfo = JSON:decode(Utils:ReadFile(self.SubAreaPath .. subAreaId .. ".json"))
 
     if subAreaInfo then
         return subAreaInfo.areaId

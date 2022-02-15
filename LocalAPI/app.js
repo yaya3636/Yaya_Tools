@@ -128,11 +128,11 @@ function GetHuntURL(dir, posX, posY) {
     if ( IsStringEquals(dir, "Right") ) {
         return "map-clue?$sort[name.fr]=1&y=" + posY + "&x[$gt]=" + posX + "&x[$lte]=" + (parseInt(posX) + 10) + "&lang=fr"
     } else if ( IsStringEquals(dir, "Left")) {
-        return "map-clue?$sort[name.fr]=1&y=" + posY + "&x[$lt]=" + posX + "&x[$gte]=" + (parseInt(posY) - 10) + "&lang=fr"
+        return "map-clue?$sort[name.fr]=1&y=" + posY + "&x[$lt]=" + posX + "&x[$gte]=" + (parseInt(posX) - 10) + "&lang=fr"
     } else if ( IsStringEquals(dir, "Top")) {
         return "map-clue?$sort[name.fr]=1&x=" + posX + "&y[$lt]=" + posY + "&y[$gte]=" + (parseInt(posY) - 10) + "&lang=fr"
     } else if ( IsStringEquals(dir, "Bottom")) {
-        return "map-clue?$sort[name.fr]=1&x=" + posX + "&y[$gt]=" + posY + "&y[$lte]=" + (parseInt(posX) + 10) + "&lang=fr"
+        return "map-clue?$sort[name.fr]=1&x=" + posX + "&y[$gt]=" + posY + "&y[$lte]=" + (parseInt(posY) + 10) + "&lang=fr"
     }
 }
 

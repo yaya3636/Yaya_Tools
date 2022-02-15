@@ -71,44 +71,43 @@ function API.dofusDB.harverstable:GetHarvestablePosition(gatherId)
     local ret = {}
 
     local function sortData(data)
+        local function sortQuantity(qty)
+            local t = {}
+            for _, v in pairs(qty) do
+                local ctrQty = {}
+                ctrQty.gatherId = v.item
+                ctrQty.quantity = v.quantity
+                table.insert(t, ctrQty)
+            end
+            return t
+        end
         for _, v in pairs(data) do
-            local map = {}
-            map.mapId = v.id
-            map.posX = v.pos.posX
-            map.posY = v.pos.posY
-            map.subAreaId = v.pos.subAreaId
-            map.worldMap = v.pos.worldMap
-            map.harvestableElement = v.quantities
-            table.insert(ret, map)
+            local ctrMap = {}
+            ctrMap.mapId = v.id
+            ctrMap.posX = v.pos.posX
+            ctrMap.posY = v.pos.posY
+            ctrMap.subAreaId = v.pos.subAreaId
+            ctrMap.worldMap = v.pos.worldMap
+            ctrMap.harvestableElement = sortQuantity(v.quantities)
+            if ret[tostring(ctrMap.subAreaId)] == nil then ret[tostring(ctrMap.subAreaId)] = {} end
+            table.insert(ret[tostring(ctrMap.subAreaId)], ctrMap)
         end
     end
 
-    local jsonString = developer:getRequest(API.dofusDB.apiUrl .. self:GetURL(gatherId) .. "&$skip=0&lang=fr")
-    local jsonDecode = JSON:decode(jsonString)
+    local jsonDecode = JSON:decode(developer:getRequest(API.dofusDB.apiUrl .. self:GetURL(gatherId) .. "&$skip=0&lang=fr"))
     local total = jsonDecode.total
 
     sortData(jsonDecode.data)
 
     for i = 1, math.ceil(total / 10) do
-        jsonString = developer:getRequest(API.dofusDB.apiUrl .. self:GetURL(gatherId) .. "&$skip=" .. i * 10 .."&lang=fr")
-        jsonDecode = JSON:decode(jsonString)
-        sortData(jsonDecode.data)
+        sortData(JSON:decode(developer:getRequest(API.dofusDB.apiUrl .. self:GetURL(gatherId) .. "&$skip=" .. i * 10 .."&lang=fr")).data)
     end
 
     return ret
 end
 
 function API.dofusDB.harverstable:GetHaverstablePositionInSubArea(gatherId, subAreaId)
-    local ret = {}
-    local mapContainsRes = self:GetHarvestablePosition(gatherId)
-
-    for _, vMap in pairs(mapContainsRes) do
-        if vMap.subAreaId == subAreaId then
-            table.insert(ret, vMap)
-        end
-    end
-
-    return ret
+    return self:GetHarvestablePosition(gatherId)[tostring(subAreaId)]
 end
 
 function API.dofusDB.harverstable:GetURL(gatherId)

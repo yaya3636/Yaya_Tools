@@ -36,32 +36,23 @@ app.post("/hunt/nextFlagPosition", async (req, res) => {
     //console.log(req.body.posX + "," + req.body.posY + " : " + req.body.dir)
     var data = await GetHuntFlagData(req.body.dir, req.body.posX, req.body.posY)
     //console.log(data)
-    data.sort((a,b) => {
-        if (IsStringEquals(req.params.direction, "Right")) {
-            return a.posX - b.posX
-        } else if (IsStringEquals(req.params.direction, "Left")) {
-            return b.posX - a.posX
-        } else if (IsStringEquals(req.params.direction, "Top")) {
-            return a.posY - b.posY
-        } else if (IsStringEquals(req.params.direction, "Bottom")) {
-            return b.posY - a.posY
-        } 
+
+    data = Sort(data, (a, b) => {
+        if (IsStringEquals(req.body.dir, "Right")) {
+            return a.posX < b.posX
+        } else if (IsStringEquals(req.body.dir, "Left")) {
+            return a.posX > b.posX
+        } else if (IsStringEquals(req.body.dir, "Top")) {
+            return a.posY > b.posY
+        } else if (IsStringEquals(req.body.dir, "Bottom")) {
+            return a.posY < b.posY
+        }     
     })
 
-    var ret
+    //console.log(data)
 
-    data.forEach(ele => {
-        ele.clue.forEach(e => {
-            if (IsStringEquals(req.body.flagName, e)) {
-                ret = {
-                    posX: ele.posX,
-                    posY: ele.posY,
-                    flagName: e
-                }
-                return
-            }
-        })
-    })
+    var ret = SortPos(data, req.body.flagName)
+
 
     if (ret) {
         res.status(200).json(Success(ret))
@@ -76,6 +67,29 @@ app.listen(PORT, () => {
 
 
 // Function hunt
+
+function SortPos(d, flagName) {
+    for (var i = 0; i < d.length - 1; i++) {
+        var equal = false
+        var flg = ""
+        d[i].clue.forEach(e => {
+            //console.log(flagName + " : " + e)
+            if (IsStringEquals(flagName, e)) {
+                //console.log("equal")
+                equal = true
+                flg = e
+            }
+        })    
+        if (equal) {
+            return {
+                posX: d[i].posX,
+                posY: d[i].posY,
+                flagName: flg
+            }
+        }
+    }
+    return null
+}
 
 async function GetHuntFlagData(dir, posX, posY) {
     var total = 10
@@ -137,10 +151,28 @@ function GetHuntURL(dir, posX, posY) {
 }
 
 function IsStringEquals(str1, str2) {
-    return new String(str1).toLowerCase().normalize("NFC") === new String(str2).toLowerCase().normalize("NFC")
+    return new String(str1).valueOf().toLowerCase().normalize("NFC") == String(str2).valueOf().toLowerCase().normalize("NFC")
 }
 
 // Function API
+
+function Sort(array, fn) {
+    var numArray = array
+    for (var i = 0; i < numArray.length - 1; i++) {
+        var min = i;
+        for (var j = i + 1; j < numArray.length; j++) {
+            if (fn(numArray[j], numArray[min])) {
+                min = j
+            }
+        }
+        if (min != i) {
+            var target = numArray[i]
+            numArray[i] = numArray[min]
+            numArray[min] = target
+        }
+    }
+    return numArray
+}
 
 function Success(result) {
     return {

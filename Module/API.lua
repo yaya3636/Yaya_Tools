@@ -5,6 +5,7 @@ API = {}
 
 API.localAPI = {}
 
+API.localAPI.isStarted = false
 API.localAPI.nbTryStartAPI = 0
 API.localAPI.localPort = JSON:decode(Utils:ReadFile(global:getCurrentDirectory() .. "\\YAYA\\LocalAPI\\ConfigAPI.json")).port
 API.localAPI.localURL = "http://localhost:" .. API.localAPI.localPort .. "/"
@@ -36,23 +37,30 @@ function API.localAPI:StartAPI()
         self:StartAPI()
         if self.nbTryStartAPI < 3 then
             Utils:Print("L'API a été lancée", "API")
+            self.isStarted = true
         end
     else
         if self.nbTryStartAPI < 3 then
             Utils:Print("L'API et déja exécuter", "API")
+            self.isStarted = true
         end
     end
 end
 
 function API.localAPI:PostRequest(url, data)
-    local result = JSON:decode(developer:postRequest(self.localURL .. url, data))
-    if result.status == "success" then
-        return result.result
-    elseif result.status == "error" then
-        Utils:Print(result.message, "API")
-        return nil
+    if self.isStarted then
+        local result = JSON:decode(developer:postRequest(self.localURL .. url, data))
+        if result.status == "success" then
+            return result.result
+        elseif result.status == "error" then
+            Utils:Print(result.message, "API")
+            return nil
+        else
+            Utils:Print("Result non définie", "API")
+            return nil
+        end
     else
-        Utils:Print("Result non définie", "API")
+        Utils:Print("L'API n'est pas exécuter, installer NodeJS et ne pas fermer l'invite de commande !", "API")
         return nil
     end
 end

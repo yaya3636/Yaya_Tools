@@ -33,9 +33,9 @@ app.get("/startedAPI", (req, res) => {
 // Chasse aux trésor
 
 app.post("/hunt/nextFlagPosition", async (req, res) => {
-    console.log(req.body.posX + "," + req.body.posY + " : " + req.body.dir)
+    //console.log(req.body.posX + "," + req.body.posY + " : " + req.body.dir)
     var data = await GetHuntFlagData(req.body.dir, req.body.posX, req.body.posY)
-    console.log(data)
+    //console.log(data)
     data.sort((a,b) => {
         if (IsStringEquals(req.params.direction, "Right")) {
             return a.posX - b.posX
@@ -88,7 +88,7 @@ async function GetHuntFlagData(dir, posX, posY) {
         if (i > 0) {
             skip = "&$skip=" + i * 10
         }
-        console.log(urlDofusDB + GetHuntURL(dir, posX, posY) + skip)
+        //console.log(urlDofusDB + GetHuntURL(dir, posX, posY) + skip)
 
         await axios.get(urlDofusDB + GetHuntURL(dir, posX, posY) + skip)
         .then(function (response) {

@@ -193,7 +193,7 @@ function Movement:HavenBagTP(dest, message, forbiddenZaap)
 
     if not self.teleported then
         self:HavenBag()
-        if message ~= nil or type(message) ~= "table" then
+        if type(message) == "string" then
             Utils:Print(message, "Move")
         end
         self.teleported = Movement:UseZaap(dest, forbiddenZaap)

@@ -55,6 +55,11 @@ Movement.havenbagMap = {
     -- Territoire des porco
 
     { map = 72619524, path = "left" },
+
+    -- Amakna
+
+    { map = 88085773, path = "left" },
+
 }
 
 Movement.teleported = false

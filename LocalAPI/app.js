@@ -57,7 +57,7 @@ app.post("/hunt/nextFlagPosition", async (req, res) => {
     if (ret) {
         res.status(200).json(Success(ret))
     } else {
-        res.status(404).json(Error("Indice non trouvée, pos : [" + req.body.posX + "," + req.body.posY + "] dir : " + req.body.dir + " indice : " + req.body.flagName))
+        res.status(404).json(Error("Indice non trouvée, [Pos : " + req.body.posX + "," + req.body.posY + "] [Dir : " + req.body.dir + "] [Indice : " + req.body.flagName + "]"))
     }
 })
 

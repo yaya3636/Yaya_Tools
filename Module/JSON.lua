@@ -344,15 +344,18 @@ parse = function(str, idx)
   if f then
     return f(str, idx)
   end
-  decode_error(str, idx, "unexpected character '" .. chr .. "'")
+  return nil
 end
 
 
 function json:decode(str)
-  if type(str) ~= "string" then
+  if str == nil or type(str) ~= "string" then
     return nil
   end
   local res, idx = parse(str, next_char(str, 1, space_chars, true))
+  if res == nil or idx == nil then
+    return nil
+  end
   idx = next_char(str, idx, space_chars, true)
   if idx <= #str then
     decode_error(str, idx, "trailing garbage")

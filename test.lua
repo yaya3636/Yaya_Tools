@@ -4,8 +4,8 @@ API = dofile(global:getCurrentDirectory() .. "\\YAYA\\Module\\API.lua")
 
 function move()
     --local ret = API.dofusDB.treasure:GetNextFlagPosition("Rondin de bois", "right")
-    local ret = API.dofusDB.harverstable:GetHaverstablePositionInSubArea(303, 103)
-    
-    Utils:Dump(ret, 500)
+    local allArea = API.dofusDB.harverstable:GetHarvestablePosition(303)
+    local sArea = API.dofusDB.harverstable:GetHaverstablePositionInSubArea(303, 103)
+    Utils:Dump(allArea, 100)
     --Utils:Print(Utils:LenghtOfTable(ret))
 end

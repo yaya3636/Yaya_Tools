@@ -20,30 +20,38 @@ API.dofusDB.treasure = {}
 -- LocalAPI
 
 function API.localAPI:StartAPI()
-    self.nbTryStartAPI = self.nbTryStartAPI + 1
+    if not self.isStarted then
+        if self.nbTryStartAPI == 0 then
+            Utils:Print("Vérification de l'API", "API")
+            Utils:Print("Penser a installer NodeJS sur votre PC", "API")
+        end
 
-    if self.nbTryStartAPI > 2 then
-        Utils:Print("Impossible de lancer l'API vérifier les pré-requis", "API")
-        return
-    end
+        self.nbTryStartAPI = self.nbTryStartAPI + 1
 
-    if developer:getRequest(API.localAPI.localURL .. "startedAPI") ~= "sucess" then
-        if self.nbTryStartAPI == 1 then
-            Utils:Print("L'API n'est pas exécuter, exécution du serveur", "API")
+        if self.nbTryStartAPI > 2 then
+            Utils:Print("Impossible de lancer l'API vérifier les pré-requis", "API")
+            return
         end
-        Utils:ExecuteWinCMD("start " .. global:getCurrentDirectory() .. "\\YAYA\\LocalAPI\\install.bat " .. global:getCurrentDirectory() .. "\\YAYA\\LocalAPI", true)
-        Utils:ExecuteWinCMD("start node " .. global:getCurrentDirectory() .. "\\YAYA\\LocalAPI\\app.js")
-        global:delay(10000)
-        self:StartAPI()
-        if self.nbTryStartAPI < 3 then
-            Utils:Print("L'API a été lancée", "API")
-            self.isStarted = true
+
+        if developer:getRequest(API.localAPI.localURL .. "startedAPI") ~= "sucess" then
+            if self.nbTryStartAPI == 1 then
+                Utils:Print("L'API n'est pas exécuter, exécution du serveur", "API")
+            end
+            Utils:ExecuteWinCMD("start " .. global:getCurrentDirectory() .. "\\YAYA\\LocalAPI\\install.bat " .. global:getCurrentDirectory() .. "\\YAYA\\LocalAPI", true)
+            Utils:ExecuteWinCMD("start node " .. global:getCurrentDirectory() .. "\\YAYA\\LocalAPI\\app.js")
+            global:delay(10000)
+            self:StartAPI()
+            if self.nbTryStartAPI < 3 then
+                Utils:Print("L'API a été lancée", "API")
+                self.isStarted = true
+            end
+        else
+            if self.nbTryStartAPI < 3 then
+                Utils:Print("L'API et déja exécuter", "API")
+                self.isStarted = true
+            end
         end
-    else
-        if self.nbTryStartAPI < 3 then
-            Utils:Print("L'API et déja exécuter", "API")
-            self.isStarted = true
-        end
+
     end
 end
 
@@ -93,8 +101,8 @@ function API.dofusDB.harverstable:GetHarvestablePosition(gatherId)
             table.insert(ret[tostring(ctrMap.subAreaId)], ctrMap)
         end
     end
-
     local jsonDecode = JSON:decode(developer:getRequest(API.dofusDB.apiUrl .. self:GetURL(gatherId) .. "&$skip=0&lang=fr"))
+
     local total = jsonDecode.total
 
     sortData(jsonDecode.data)
@@ -117,13 +125,10 @@ end
 -- Treasure
 
 function API.dofusDB.treasure:GetNextFlagPosition(nextFlagName, nextFlagDirection)
+    API.localAPI:StartAPI()
     local currentMap = map:currentMap()
     local x, y = string.sub(currentMap, 0, string.find(currentMap, ",") - 1), string.sub(currentMap, string.find(currentMap, ",") + 1, -1)
     return API.localAPI:PostRequest("hunt/nextFlagPosition", "posX=" .. x .. "&posY=" .. y .. "&dir=" .. nextFlagDirection .. "&flagName=" .. nextFlagName)
 end
-
-Utils:Print("Vérification de l'API", "API")
-Utils:Print("Penser a installer NodeJS sur votre PC", "API")
-API.localAPI:StartAPI()
 
 return API

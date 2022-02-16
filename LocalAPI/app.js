@@ -63,6 +63,7 @@ app.post("/hunt/nextFlagPosition", async (req, res) => {
 
 app.listen(PORT, () => {
     console.log("Le serveur a démarré sur le port : " + PORT)
+    console.log("Ne pas fermer l'invite de commande !")
 })
 
 

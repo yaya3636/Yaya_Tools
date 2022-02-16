@@ -57,6 +57,8 @@ Movement.havenbagMap = {
     { map = 72619524, path = "left" },
 }
 
+Movement.teleported = false
+
 Movement.RoadLoaded = false
 
 Movement.RZNextMapId = -1
@@ -144,41 +146,60 @@ function Movement:GoAstrub()
 end
 
 function Movement:HavenBag()
-    self:HavenbagMapCheck()
-
-    if map:currentMap() ~= "0,0" then
-        map:changeMap('havenbag')
-    end
-end
-
-function Movement:UseZaap(mapIdDest, zaapExcepted)
-    local source = 3
-
-    if map:currentMap() ~= "0,0" then
-        source = 0
-    end
-
-    local closestZaap = map:closestZaapV2(mapIdDest, zaapExcepted)
-
-    if closestZaap == 0 then
-        Utils:Print("Aucun zaap trouvée pour la map (" .. mapIdDest .. ")", "error")
-        map:changeMap('havenbag')
-    else
-        map:toZaap(closestZaap, source)
-    end
-    global:delay(1000)
-end
-
-function Movement:HavenbagMapCheck()
+    local canHaven = true
     for _, v in pairs(self.havenbagMap) do
         if map:currentMapId() == v.map then
+            canHaven = false
             if v.door then
                 map:door(tonumber(v.door))
             elseif v.path then
                 map:changeMap(v.path)
             end
+            global:delay(1000)
         end
     end
+
+    if map:currentMap() ~= "0,0" and canHaven then
+        map:changeMap('havenbag')
+    end
+end
+
+function Movement:UseZaap(mapIdDest, zaapExcepted)
+        local source = 3
+
+        if map:currentMap() ~= "0,0" then
+            source = 0
+        end
+
+        local closestZaap = map:closestZaapV2(mapIdDest, zaapExcepted)
+
+        if closestZaap == 0 then
+            Utils:Print("Aucun zaap trouvée pour la map (" .. mapIdDest .. ")", "error")
+            global:leaveDialog()
+            map:changeMap('havenbag')
+            return false
+        else
+            self.teleported = true
+            map:toZaap(closestZaap, source)
+            global:leaveDialog()
+            return false
+        end
+end
+
+function Movement:HavenBagTP(dest, message, forbiddenZaap)
+    if self.teleported == nil then
+        self.teleported = true
+    end
+
+    if not self.teleported then
+        self:HavenBag()
+        if message ~= nil or type(message) ~= "table" then
+            Utils:Print(message, "Move")
+        end
+        self.teleported = Movement:UseZaap(dest, forbiddenZaap)
+        global:delay(1000)
+    end
+
 end
 
 return Movement

@@ -96,6 +96,24 @@ function Utils:ExistKeyTable(t, key)
     return false
 end
 
+function Utils:SortArray(array, fn)
+    local numArray = array
+    for i = 1, #numArray do
+        local min = i
+        for j = i + 1, #numArray do
+            if (fn(numArray[j], numArray[min])) then
+                min = j
+            end
+        end
+        if (min ~= i) then
+            local target = numArray[i]
+            numArray[i] = numArray[min]
+            numArray[min] = target
+        end
+    end
+    return numArray
+end
+
 function Utils:ShuffleTbl(tbl)
     local ret = tbl
 

@@ -30,7 +30,21 @@ app.get("/startedAPI", (req, res) => {
 
 // DofusDB
 
-// Chasse aux trésor
+// Ressources
+
+app.post("/harvestable/getHarvestablePosition", async (req, res) => {
+
+    var data = await GetHarvestableData(req.body.gatherId)
+
+    if (data) {
+        res.status(200).json(Success(data))
+    } else {
+        res.status(404).json(Error("GatherId non trouvée, [GatherId : " + req.body.gatherId + "]"))
+    }
+
+})
+
+// Chasse aux trésor 
 
 app.post("/hunt/nextFlagPosition", async (req, res) => {
     //console.log(req.body.posX + "," + req.body.posY + " : " + req.body.dir)
@@ -39,9 +53,9 @@ app.post("/hunt/nextFlagPosition", async (req, res) => {
 
     data = Sort(data, (a, b) => {
         if (IsStringEquals(req.body.dir, "Right")) {
-            return a.posX < b.posX
-        } else if (IsStringEquals(req.body.dir, "Left")) {
             return a.posX > b.posX
+        } else if (IsStringEquals(req.body.dir, "Left")) {
+            return a.posX < b.posX
         } else if (IsStringEquals(req.body.dir, "Top")) {
             return a.posY > b.posY
         } else if (IsStringEquals(req.body.dir, "Bottom")) {
@@ -53,7 +67,7 @@ app.post("/hunt/nextFlagPosition", async (req, res) => {
 
     var ret = SortPos(data, req.body.flagName)
 
-
+    //console.log(ret)
     if (ret) {
         res.status(200).json(Success(ret))
     } else {
@@ -66,31 +80,72 @@ app.listen(PORT, () => {
     console.log("Ne pas fermer l'invite de commande !")
 })
 
+// Function Harvestable
 
-// Function hunt
-
-function SortPos(d, flagName) {
-    for (var i = 0; i < d.length - 1; i++) {
-        var equal = false
-        var flg = ""
-        d[i].clue.forEach(e => {
-            //console.log(flagName + " : " + e)
-            if (IsStringEquals(flagName, e)) {
-                //console.log("equal")
-                equal = true
-                flg = e
-            }
-        })    
-        if (equal) {
-            return {
-                posX: d[i].posX,
-                posY: d[i].posY,
-                flagName: flg
-            }
+async function GetHarvestableData(gatherId) {
+    const constructorMap = (map) => {
+        const constructorHarvestable = (harvestable) => {
+            var ret = []
+            harvestable.forEach(e => {
+                var ctrQty = {}
+                ctrQty.gatherId = e.item
+                ctrQty.quantity = e.quantity
+                ret.push(ctrQty)
+            })
+            return ret
         }
+
+        var ret = {}
+        ret.mapId = map.id
+        ret.posX = map.pos.posX
+        ret.posY = map.pos.posY
+        ret.subAreaId = map.pos.subAreaId
+        ret.worldMap = map.pos.worldMap
+        ret.harvestableElement = constructorHarvestable(map.quantities)
+
+        return ret
     }
-    return null
+    var total = 10
+    var data = new Map()
+    var ret = []
+
+    for (let i = 0; i < Math.ceil(total / 10); i++) {
+        var skip = ""
+        if (i > 0) {
+            skip = "&$skip=" + i * 10
+        }
+        //console.log(urlDofusDB + GetHuntURL(dir, posX, posY) + skip)
+
+        await axios.get(urlDofusDB + "recoltable?resources[$in][]=" + gatherId + skip)
+        .then(function (response) {
+            total = response.data.total
+
+            response.data.data.forEach(e => {
+                if ('subAreaId' in e.pos) {
+                    if (!data.has(e.pos.subAreaId)) {
+                        data.set(e.pos.subAreaId, [constructorMap(e)])
+                    } else {
+                        var tmp = data.get(e.pos.subAreaId)
+                        tmp.push(constructorMap(e))
+                        data.set(e.pos.subAreaId, tmp)
+                    }    
+                }
+            })
+
+        })
+        .catch((response) => {
+            console.log(response)
+        })
+    }
+
+    data.forEach(e => {
+        ret.push(e)
+    })
+
+    return ret
 }
+
+// Function Hunt
 
 async function GetHuntFlagData(dir, posX, posY) {
     var total = 10
@@ -135,8 +190,32 @@ async function GetHuntFlagData(dir, posX, posY) {
     data.forEach(e => {
         ret.push(e)
     })
+    //console.log(ret)
 
     return ret
+}
+
+function SortPos(d, flagName) {
+    for (var i = 0; i < d.length - 1; i++) {
+        var equal = false
+        var flg = ""
+        d[i].clue.forEach(e => {
+            //console.log(flagName + " : " + e)
+            if (IsStringEquals(flagName, e)) {
+                //console.log("equal")
+                equal = true
+                flg = e
+            }
+        })    
+        if (equal) {
+            return {
+                posX: d[i].posX,
+                posY: d[i].posY,
+                flagName: flg
+            }
+        }
+    }
+    return null
 }
 
 function GetHuntURL(dir, posX, posY) {

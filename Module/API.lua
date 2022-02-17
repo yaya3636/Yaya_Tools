@@ -14,7 +14,7 @@ API.localAPI.localURL = "http://localhost:" .. API.localAPI.localPort .. "/"
 API.dofusDB = {}
 API.dofusDB.apiUrl = "https://api.dofusdb.fr/"
 
-API.dofusDB.harverstable = {}
+API.dofusDB.harvestable = {}
 
 API.dofusDB.treasure = {}
 
@@ -88,8 +88,15 @@ end
 
 -- Harvestable
 
-function API.dofusDB.harverstable:GetHarvestablePosition(gatherId)
+function API.dofusDB.harvestable:GetHarvestablePosition(gatherId)
+    API.localAPI:StartAPI()
+    local data = API.localAPI:PostRequest("harvestable/getHarvestablePosition", "gatherId=" .. gatherId)
+    return data
+end
+
+function API.dofusDB.harvestable:GetHarvestablePositionBis(gatherId)
     local ret = {}
+    Utils:Print("ici")
 
     local function sortData(data)
         local function sortQuantity(qty)
@@ -124,14 +131,15 @@ function API.dofusDB.harverstable:GetHarvestablePosition(gatherId)
         sortData(JSON:decode(developer:getRequest(API.dofusDB.apiUrl .. self:GetURL(gatherId) .. "&$skip=" .. i * 10 .."&lang=fr")).data)
     end
 
+    Utils:Dump(ret)
     return ret
 end
 
-function API.dofusDB.harverstable:GetHaverstablePositionInSubArea(gatherId, subAreaId)
+function API.dofusDB.harvestable:GetHaverstablePositionInSubArea(gatherId, subAreaId)
     return self:GetHarvestablePosition(gatherId)[tostring(subAreaId)]
 end
 
-function API.dofusDB.harverstable:GetURL(gatherId)
+function API.dofusDB.harvestable:GetURL(gatherId)
     return "recoltable?resources[$in][]=" .. gatherId
 end
 
@@ -141,6 +149,7 @@ function API.dofusDB.treasure:GetNextFlagPosition(nextFlagName, nextFlagDirectio
     API.localAPI:StartAPI()
     local currentMap = map:currentMap()
     local x, y = string.sub(currentMap, 0, string.find(currentMap, ",") - 1), string.sub(currentMap, string.find(currentMap, ",") + 1, -1)
+
     return API.localAPI:PostRequest("hunt/nextFlagPosition", "posX=" .. x .. "&posY=" .. y .. "&dir=" .. nextFlagDirection .. "&flagName=" .. nextFlagName)
 end
 

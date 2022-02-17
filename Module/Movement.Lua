@@ -44,7 +44,6 @@ Movement.havenbagMap = {
     { map = 57017859, path = "395" },
 
     -- Malle au tresor
-
     { map = 128452097, path = "504" },
     { map = 128451073, door = "549" },
 
@@ -59,6 +58,7 @@ Movement.havenbagMap = {
     -- Amakna
 
     { map = 88085773, path = "left" },
+    { map = 88082193, path = "right" },
 
 }
 
@@ -157,8 +157,10 @@ function Movement:HavenBag()
             canHaven = false
             if v.door then
                 map:door(tonumber(v.door))
-            elseif v.path then
+            elseif tonumber(v.path) == nil then
                 map:changeMap(v.path)
+            else
+                map:moveToCell(tonumber(v.path))
             end
             global:delay(1000)
         end

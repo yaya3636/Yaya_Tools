@@ -66,15 +66,15 @@ app.post("/hunt/nextFlagPosition", async (req, res) => {
             }
         } else if (IsStringEquals(req.body.dir, "Top")) {
             if (a.posY > 0) {
-                return a.posY > b.posY
-            } else {
                 return a.posY < b.posY
+            } else {
+                return a.posY > b.posY
             }
         } else if (IsStringEquals(req.body.dir, "Bottom")) {
             if (a.posY > 0) {
-                return a.posY < b.posY
-            } else {
                 return a.posY > b.posY
+            } else {
+                return a.posY < b.posY
             }
         }     
     })

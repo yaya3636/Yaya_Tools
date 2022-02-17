@@ -67,7 +67,7 @@ app.post("/hunt/nextFlagPosition", async (req, res) => {
     }     
 
 
-    console.log(data)
+    //console.log(data)
 
     var ret = SortPos(data, req.body.flagName)
 

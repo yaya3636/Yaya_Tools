@@ -51,35 +51,23 @@ app.post("/hunt/nextFlagPosition", async (req, res) => {
     var data = await GetHuntFlagData(req.body.dir, req.body.posX, req.body.posY)
     //console.log(data)
 
-    data = Sort(data, (a, b) => {
-        if (IsStringEquals(req.body.dir, "Right")) {
-            if (a.posX > 0) {
-                return a.posX > b.posX 
-            } else {
-                return a.posX < b.posX
-            }
-        } else if (IsStringEquals(req.body.dir, "Left")) {
-            if (a.posX > 0) {
-                return a.posX < b.posX 
-            } else {
-                return a.posX > b.posX
-            }
-        } else if (IsStringEquals(req.body.dir, "Top")) {
-            if (a.posY > 0) {
-                return a.posY < b.posY
-            } else {
-                return a.posY > b.posY
-            }
-        } else if (IsStringEquals(req.body.dir, "Bottom")) {
-            if (a.posY > 0) {
-                return a.posY > b.posY
-            } else {
-                return a.posY < b.posY
-            }
-        }     
-    })
+    if (IsStringEquals(req.body.dir, "Right")) {
+        data = sortBy(data, "posX")
 
-    //console.log(data)
+    } else if (IsStringEquals(req.body.dir, "Left")) {
+        data = sortBy(data, "posX")
+        data.reverse()
+
+    } else if (IsStringEquals(req.body.dir, "Top")) {
+        data = sortBy(data, "posY")
+        data.reverse()
+
+    } else if (IsStringEquals(req.body.dir, "Bottom")) {
+        data = sortBy(data, "posY")
+    }     
+
+
+    console.log(data)
 
     var ret = SortPos(data, req.body.flagName)
 
@@ -235,13 +223,13 @@ function SortPos(d, flagName) {
 
 function GetHuntURL(dir, posX, posY) {
     if ( IsStringEquals(dir, "Right") ) {
-        return "map-clue?$sort[name.fr]=1&y=" + posY + "&x[$gt]=" + posX + "&x[$lte]=" + (parseInt(posX) + 10) + "&lang=fr"
+        return "map-clue?$sort[name.fr]=1&y=" + posY + "&x[$gt]=" + posX + "&x[$lte]=" + (parseInt(posX) + 20) + "&lang=fr"
     } else if ( IsStringEquals(dir, "Left")) {
-        return "map-clue?$sort[name.fr]=1&y=" + posY + "&x[$lt]=" + posX + "&x[$gte]=" + (parseInt(posX) - 10) + "&lang=fr"
+        return "map-clue?$sort[name.fr]=1&y=" + posY + "&x[$lt]=" + posX + "&x[$gte]=" + (parseInt(posX) - 20) + "&lang=fr"
     } else if ( IsStringEquals(dir, "Top")) {
-        return "map-clue?$sort[name.fr]=1&x=" + posX + "&y[$lt]=" + posY + "&y[$gte]=" + (parseInt(posY) - 10) + "&lang=fr"
+        return "map-clue?$sort[name.fr]=1&x=" + posX + "&y[$lt]=" + posY + "&y[$gte]=" + (parseInt(posY) - 20) + "&lang=fr"
     } else if ( IsStringEquals(dir, "Bottom")) {
-        return "map-clue?$sort[name.fr]=1&x=" + posX + "&y[$gt]=" + posY + "&y[$lte]=" + (parseInt(posY) + 10) + "&lang=fr"
+        return "map-clue?$sort[name.fr]=1&x=" + posX + "&y[$gt]=" + posY + "&y[$lte]=" + (parseInt(posY) + 20) + "&lang=fr"
     }
 }
 
@@ -250,6 +238,11 @@ function IsStringEquals(str1, str2) {
 }
 
 // Function API
+
+function sortBy(arr, prop) {
+    return arr.sort((a, b) => a[prop] - b[prop]);
+}
+  
 
 function Sort(array, fn) {
     var numArray = array

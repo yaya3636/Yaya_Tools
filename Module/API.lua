@@ -145,11 +145,17 @@ end
 
 -- Treasure
 
-function API.dofusDB.treasure:GetNextFlagPosition(nextFlagName, nextFlagDirection)
+function API.dofusDB.treasure:GetNextFlagPosition(nextFlagName, nextFlagDirection, pX, pY)
     API.localAPI:StartAPI()
     local currentMap = map:currentMap()
-    local x, y = string.sub(currentMap, 0, string.find(currentMap, ",") - 1), string.sub(currentMap, string.find(currentMap, ",") + 1, -1)
+    local x, y
 
+    if pX ~= nil and pY ~= nil then
+        x, y = pX, pY
+    else
+        x, y = string.sub(currentMap, 0, string.find(currentMap, ",") - 1), string.sub(currentMap, string.find(currentMap, ",") + 1, -1)
+    end
+    --Utils:Print("[" ..x..","..y.."]")
     return API.localAPI:PostRequest("hunt/nextFlagPosition", "posX=" .. x .. "&posY=" .. y .. "&dir=" .. nextFlagDirection .. "&flagName=" .. nextFlagName)
 end
 

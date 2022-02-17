@@ -53,13 +53,29 @@ app.post("/hunt/nextFlagPosition", async (req, res) => {
 
     data = Sort(data, (a, b) => {
         if (IsStringEquals(req.body.dir, "Right")) {
-            return a.posX > b.posX
+            if (a.posX > 0) {
+                return a.posX > b.posX 
+            } else {
+                return a.posX < b.posX
+            }
         } else if (IsStringEquals(req.body.dir, "Left")) {
-            return a.posX < b.posX
+            if (a.posX > 0) {
+                return a.posX < b.posX 
+            } else {
+                return a.posX > b.posX
+            }
         } else if (IsStringEquals(req.body.dir, "Top")) {
-            return a.posY > b.posY
+            if (a.posY > 0) {
+                return a.posY > b.posY
+            } else {
+                return a.posY < b.posY
+            }
         } else if (IsStringEquals(req.body.dir, "Bottom")) {
-            return a.posY < b.posY
+            if (a.posY > 0) {
+                return a.posY < b.posY
+            } else {
+                return a.posY > b.posY
+            }
         }     
     })
 
@@ -167,8 +183,8 @@ async function GetHuntFlagData(dir, posX, posY) {
                 const key = element.x + "," + element.y
                 if (!data.has(key)) {
                     data.set(key, { 
-                        posX: element.x,
-                        posY: element.y,
+                        posX: parseInt(element.x),
+                        posY: parseInt(element.y),
                         clue: [element.clue.name.fr]
                     })
                 } else {
@@ -190,13 +206,12 @@ async function GetHuntFlagData(dir, posX, posY) {
     data.forEach(e => {
         ret.push(e)
     })
-    //console.log(ret)
 
     return ret
 }
 
 function SortPos(d, flagName) {
-    for (var i = 0; i < d.length - 1; i++) {
+    for (var i = 0; i < d.length; i++) {
         var equal = false
         var flg = ""
         d[i].clue.forEach(e => {

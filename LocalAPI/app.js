@@ -125,7 +125,7 @@ async function GetHarvestableData(gatherId) {
             total = response.data.total
 
             response.data.data.forEach(e => {
-                if ('subAreaId' in e.pos) {
+                if (e.pos != null) {
                     if (!data.has(e.pos.subAreaId)) {
                         data.set(e.pos.subAreaId, [constructorMap(e)])
                     } else {

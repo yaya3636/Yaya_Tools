@@ -6,7 +6,7 @@
 6 - Cimetière
 7 - Cryptes du cimetière
 8 - Campement des Bworks
-9 - Forêt maléfique
+9 - Dédale du Dark Vlad
 10 - Village d'Amakna
 11 - Territoire des Porcos
 12 - Péninsule des gelées
@@ -442,3 +442,6 @@
 1013 - Garde-manger du Rat Blanc
 1014 - Mer de Poussière
 1015 - Long Descendre
+1016 - Tertre du long sommeil
+1018 - Akadémie des Gobs
+1019 - Orée enchantée

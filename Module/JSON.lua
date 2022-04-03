@@ -94,6 +94,7 @@ local type_func_map = {
   [ "string"  ] = encode_string,
   [ "number"  ] = encode_number,
   [ "boolean" ] = tostring,
+  [ "function" ] = tostring,
 }
 
 
@@ -107,7 +108,7 @@ encode = function(val, stack)
 end
 
 
-function json.encode(val)
+function json:encode(val)
   return ( encode(val) )
 end
 
